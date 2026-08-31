@@ -3,10 +3,11 @@ import { MilestoneCard } from "./MilestoneCard";
 
 interface Props {
   completed: Set<string>;
-  onToggle: (id: string) => void;
+  onComplete: (id: string, password: string) => boolean;
+  onUndo: (id: string) => void;
 }
 
-export function QuestTrail({ completed, onToggle }: Props) {
+export function QuestTrail({ completed, onComplete, onUndo }: Props) {
   const doneCount = MILESTONES.filter((m) => completed.has(m.id)).length;
 
   return (
@@ -16,7 +17,7 @@ export function QuestTrail({ completed, onToggle }: Props) {
         aria-hidden
       />
 
-      <ol className="flex flex-col gap-8">
+      <ol className="flex flex-col gap-14 sm:gap-16">
         {MILESTONES.map((milestone, i) => {
           const done = completed.has(milestone.id);
           const isNext = !done && doneCount === i;
@@ -27,7 +28,7 @@ export function QuestTrail({ completed, onToggle }: Props) {
               {/* Marker on the trail */}
               <span
                 aria-hidden
-                className={`absolute left-6 top-7 z-10 flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full border-2 text-base font-bold shadow-lg sm:left-1/2 ${
+                className={`absolute left-6 top-8 z-10 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border-2 text-lg font-bold shadow-lg sm:left-1/2 ${
                   done
                     ? "border-white/40"
                     : isNext
@@ -45,19 +46,20 @@ export function QuestTrail({ completed, onToggle }: Props) {
                 {done ? "✓" : isNext ? milestone.emoji : milestone.number}
               </span>
 
-              <div className="grid pl-16 sm:grid-cols-2 sm:pl-0">
+              <div className="grid grid-cols-1 pl-20 sm:grid-cols-2 sm:pl-0">
                 <div
-                  className={`sm:max-w-[46%] ${
+                  className={
                     leftSide
-                      ? "sm:justify-self-end sm:pr-4"
-                      : "sm:col-start-2 sm:row-start-1 sm:justify-self-start sm:pl-4"
-                  }`}
+                      ? "sm:col-start-1 sm:justify-self-end sm:w-full sm:pr-16"
+                      : "sm:col-start-2 sm:justify-self-start sm:w-full sm:pl-16"
+                  }
                 >
                   <MilestoneCard
                     milestone={milestone}
                     done={done}
                     isNext={isNext}
-                    onToggle={() => onToggle(milestone.id)}
+                    onComplete={onComplete}
+                    onUndo={onUndo}
                   />
                 </div>
               </div>
@@ -66,8 +68,8 @@ export function QuestTrail({ completed, onToggle }: Props) {
         })}
       </ol>
 
-      <div className="mt-10 flex justify-center sm:justify-end sm:pr-[26%]">
-        <p className="glass rounded-full px-5 py-2.5 text-center text-sm text-indigo-200/80">
+      <div className="mt-16 flex justify-center sm:justify-end sm:pr-[26%]">
+        <p className="glass rounded-full px-6 py-3 text-center text-sm text-indigo-200/80">
           🐢 The turtle marches on&hellip; to sweet, dreamy, CPAP-powered sleep!
         </p>
       </div>

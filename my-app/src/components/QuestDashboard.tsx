@@ -4,11 +4,12 @@ import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { HERO_NAME, MILESTONES, type Milestone } from "@/data/quest";
 import {
   clearProgress,
+  completeWithPassword,
   getServerSnapshot,
   getSnapshot,
   hydrateProgress,
   subscribe,
-  toggleMilestone,
+  undoMilestone,
 } from "@/lib/progress-store";
 import { ProgressHeader } from "./ProgressHeader";
 import { CpapAssembler } from "./CpapAssembler";
@@ -51,13 +52,20 @@ export default function QuestDashboard() {
     [completed],
   );
 
-  const toggle = (id: string) => {
-    const added = toggleMilestone(id);
-    if (added) {
+  const handleComplete = (id: string, password: string): boolean => {
+    const result = completeWithPassword(id, password);
+    if (result === "complete") {
       const milestone = MILESTONES.find((m) => m.id === id) ?? null;
       setLastUnlocked(milestone);
       setConfetti(makeConfetti());
-    } else if (finished) {
+      return true;
+    }
+    return false;
+  };
+
+  const handleUndo = (id: string) => {
+    const wasUndo = undoMilestone(id);
+    if (wasUndo && finished) {
       setFinaleDismissed(false);
     }
   };
@@ -82,7 +90,7 @@ export default function QuestDashboard() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-col gap-14 px-4 py-14">
+    <div className="mx-auto flex w-full max-w-4xl flex-col gap-16 px-4 py-14">
       <ProgressHeader
         completed={doneCount}
         total={MILESTONES.length}
@@ -93,7 +101,7 @@ export default function QuestDashboard() {
       <section aria-labelledby="assembler-heading">
         <h2
           id="assembler-heading"
-          className="mb-4 text-center text-xs font-bold uppercase tracking-[0.3em] text-indigo-300/70"
+          className="mb-5 text-center text-xs font-bold uppercase tracking-[0.3em] text-indigo-300/70"
         >
           The prize, piece by piece
         </h2>
@@ -103,11 +111,11 @@ export default function QuestDashboard() {
       <section aria-labelledby="trail-heading">
         <h2
           id="trail-heading"
-          className="mb-6 text-center text-xs font-bold uppercase tracking-[0.3em] text-indigo-300/70"
+          className="mb-5 text-center text-xs font-bold uppercase tracking-[0.3em] text-indigo-300/70"
         >
           The quest trail
         </h2>
-        <QuestTrail completed={completed} onToggle={toggle} />
+        <QuestTrail completed={completed} onComplete={handleComplete} onUndo={handleUndo} />
       </section>
 
       <footer className="flex flex-col items-center gap-3 border-t border-white/10 pt-6">

@@ -22,6 +22,7 @@ export interface Milestone {
   description: string;
   emoji: string;
   part: CpapPart;
+  password: string;
 }
 
 export const HERO_NAME = "Benjamin";
@@ -81,6 +82,7 @@ export const MILESTONES: Milestone[] = [
       "Drink at least 6 glasses of water every day for 7 days in a row. Hydration keeps the journey moving!",
     emoji: "🐳",
     part: CPAP_PARTS.humidifier,
+    password: "oasis",
   },
   {
     id: "wind-tunnel",
@@ -91,6 +93,7 @@ export const MILESTONES: Milestone[] = [
       "Get moving — 30 minutes of exercise, 3 days a week, for 2 weeks. Strong lungs build strong journeys.",
     emoji: "🍃",
     part: CPAP_PARTS.tubing,
+    password: "breeze",
   },
   {
     id: "filtering-ferns",
@@ -101,6 +104,7 @@ export const MILESTONES: Milestone[] = [
       "No screens for 1 hour before bed for 7 nights in a row. Let your brain drift away from the bright world.",
     emoji: "🍀",
     part: CPAP_PARTS.filter,
+    password: "clean",
   },
   {
     id: "velcro-vines",
@@ -111,6 +115,7 @@ export const MILESTONES: Milestone[] = [
       "Be in bed by 11pm for 10 nights. Early to bed keeps the adventure well rested.",
     emoji: "🌿",
     part: CPAP_PARTS.headgear,
+    password: "settle",
   },
   {
     id: "snuggle-stone",
@@ -121,6 +126,7 @@ export const MILESTONES: Milestone[] = [
       "Sleep at least 7 full hours for 14 nights. Those are the nights adventures are made of.",
     emoji: "🪨",
     part: CPAP_PARTS.mask,
+    password: "dream",
   },
   {
     id: "lightning-root",
@@ -131,6 +137,7 @@ export const MILESTONES: Milestone[] = [
       "Sleep and wake at roughly the same time every day for 3 straight weeks. A steady clock powers a steady turtle.",
     emoji: "⚡",
     part: CPAP_PARTS.power,
+    password: "charge",
   },
   {
     id: "heart-of-the-quest",
@@ -141,6 +148,7 @@ export const MILESTONES: Milestone[] = [
       "30 days of great sleep habits, all together. Longest and hardest leg — and the one that wins the machine.",
     emoji: "❤️",
     part: CPAP_PARTS.machine,
+    password: "breathe",
   },
 ];
 

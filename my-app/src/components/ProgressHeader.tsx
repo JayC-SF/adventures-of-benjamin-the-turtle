@@ -20,7 +20,7 @@ export function ProgressHeader({ completed, total, nextUp, finished }: Props) {
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-300/80">
           A nighttime quest for
         </p>
-        <h1 className="mt-1 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+        <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
           {HERO_NAME}
         </h1>
         <p className="mt-2 text-sm text-indigo-200/70 sm:text-base">

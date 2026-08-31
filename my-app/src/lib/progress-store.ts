@@ -1,4 +1,4 @@
-import { STORAGE_KEY } from "@/data/quest";
+import { MILESTONES, STORAGE_KEY } from "@/data/quest";
 
 export interface ProgressState {
   ready: boolean;
@@ -50,15 +50,17 @@ export function hydrateProgress() {
   emit();
 }
 
-export function toggleMilestone(id: string): boolean {
+export function completeWithPassword(
+  id: string,
+  entered: string,
+): "complete" | "wrong" | "already" {
+  if (current.completed.has(id)) return "already";
+  const milestone = MILESTONES.find((m) => m.id === id);
+  const expected = (milestone?.password ?? "").trim().toLowerCase();
+  const ok = expected.length > 0 && entered.trim().toLowerCase() === expected;
+  if (!ok) return "wrong";
   const next = new Set(current.completed);
-  let added = false;
-  if (next.has(id)) {
-    next.delete(id);
-  } else {
-    next.add(id);
-    added = true;
-  }
+  next.add(id);
   current = { ready: true, completed: next };
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify([...next]));
@@ -66,7 +68,21 @@ export function toggleMilestone(id: string): boolean {
     // Private mode — progress just won't persist.
   }
   emit();
-  return added;
+  return "complete";
+}
+
+export function undoMilestone(id: string): boolean {
+  if (!current.completed.has(id)) return false;
+  const next = new Set(current.completed);
+  next.delete(id);
+  current = { ready: true, completed: next };
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify([...next]));
+  } catch {
+    // ignore
+  }
+  emit();
+  return true;
 }
 
 export function clearProgress() {
