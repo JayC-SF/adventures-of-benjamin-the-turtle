@@ -22,8 +22,12 @@ export function getSnapshot(): ProgressState {
   return current;
 }
 
+// Must be a stable reference: useSyncExternalStore compares snapshots and a
+// fresh object on every call triggers React's infinite-loop warning.
+const SERVER_SNAPSHOT: ProgressState = { ready: false, completed: new Set() };
+
 export function getServerSnapshot(): ProgressState {
-  return { ready: false, completed: new Set() };
+  return SERVER_SNAPSHOT;
 }
 
 export function hydrateProgress() {
