@@ -3,7 +3,7 @@ import { MilestoneCard } from "./MilestoneCard";
 
 interface Props {
   completed: Set<string>;
-  onComplete: (id: string, password: string) => boolean;
+  onComplete: (id: string, password: string) => boolean | Promise<boolean | "complete" | "wrong" | "already">;
   onUndo: (id: string) => void;
 }
 

@@ -7,7 +7,7 @@ interface Props {
   milestone: Milestone;
   done: boolean;
   isNext: boolean;
-  onComplete: (id: string, password: string) => boolean;
+  onComplete: (id: string, password: string) => boolean | Promise<boolean | "complete" | "wrong" | "already">;
   onUndo: (id: string) => void;
 }
 
@@ -21,15 +21,26 @@ export function MilestoneCard({
   const part = milestone.part;
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
+  const [pending, setPending] = useState(false);
 
   const locked = !done && !isNext;
 
-  const submit = () => {
-    if (onComplete(milestone.id, value)) {
-      setValue("");
-      setError(false);
-    } else {
+  const submit = async () => {
+    setPending(true);
+    try {
+      const result = await onComplete(milestone.id, value);
+      const ok =
+        result === true || result === "complete";
+      if (ok) {
+        setValue("");
+        setError(false);
+      } else {
+        setError(true);
+      }
+    } catch {
       setError(true);
+    } finally {
+      setPending(false);
     }
   };
 
@@ -142,9 +153,10 @@ export function MilestoneCard({
           )}
           <button
             type="submit"
-            className="shrink-0 w-full rounded-xl bg-gradient-to-r from-emerald-400 to-teal-300 px-6 py-3 text-sm font-bold text-night-950 shadow-lg shadow-emerald-500/25 transition-all hover:brightness-110 active:scale-95 sm:w-auto sm:px-8"
+            disabled={pending}
+            className="shrink-0 w-full rounded-xl bg-gradient-to-r from-emerald-400 to-teal-300 px-6 py-3 text-sm font-bold text-night-950 shadow-lg shadow-emerald-500/25 transition-all hover:brightness-110 active:scale-95 disabled:opacity-60 sm:w-auto sm:px-8"
           >
-            Unlock
+            {pending ? "Checking…" : "Unlock"}
           </button>
         </form>
       )}

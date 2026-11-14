@@ -22,7 +22,7 @@ export interface Milestone {
   description: string;
   emoji: string;
   part: CpapPart;
-  password: string;
+  passwordHash: string;
 }
 
 export const HERO_NAME = "Benjamin";
@@ -82,7 +82,7 @@ export const MILESTONES: Milestone[] = [
       "Drink at least 6 glasses of water every day for 7 days in a row. Hydration keeps the journey moving!",
     emoji: "🐳",
     part: CPAP_PARTS.humidifier,
-    password: "oasis",
+    passwordHash: "8e424db8e5664ade76226356bcf5ef6ad9d0879bdad6377db835868b17c443ba",
   },
   {
     id: "wind-tunnel",
@@ -93,7 +93,7 @@ export const MILESTONES: Milestone[] = [
       "Get moving — 30 minutes of exercise, 3 days a week, for 2 weeks. Strong lungs build strong journeys.",
     emoji: "🍃",
     part: CPAP_PARTS.tubing,
-    password: "breeze",
+    passwordHash: "7e92c11499fd4106a899eeb457db8277bd6f09dd29e683f33ae704e12fa29cae",
   },
   {
     id: "filtering-ferns",
@@ -104,7 +104,7 @@ export const MILESTONES: Milestone[] = [
       "No screens for 1 hour before bed for 7 nights in a row. Let your brain drift away from the bright world.",
     emoji: "🍀",
     part: CPAP_PARTS.filter,
-    password: "clean",
+    passwordHash: "3b066804f6d1d077173cfe4d06002e6a61e6f21c2b2e648417962115f1afcd8e",
   },
   {
     id: "velcro-vines",
@@ -115,7 +115,7 @@ export const MILESTONES: Milestone[] = [
       "Be in bed by 11pm for 10 nights. Early to bed keeps the adventure well rested.",
     emoji: "🌿",
     part: CPAP_PARTS.headgear,
-    password: "settle",
+    passwordHash: "6868e83de35c465d84d347493ccc23d12b3bfacb9809d30292d21fc4701224d1",
   },
   {
     id: "snuggle-stone",
@@ -126,7 +126,7 @@ export const MILESTONES: Milestone[] = [
       "Sleep at least 7 full hours for 14 nights. Those are the nights adventures are made of.",
     emoji: "🪨",
     part: CPAP_PARTS.mask,
-    password: "dream",
+    passwordHash: "30fde358b34772de141e11ba599e28f9f44aa80ae89aaf243b73e6b9b9ebc896",
   },
   {
     id: "lightning-root",
@@ -137,7 +137,7 @@ export const MILESTONES: Milestone[] = [
       "Sleep and wake at roughly the same time every day for 3 straight weeks. A steady clock powers a steady turtle.",
     emoji: "⚡",
     part: CPAP_PARTS.power,
-    password: "charge",
+    passwordHash: "97488fbab3282166738a47c2f619037228568494475d4ac107c46c02678cb728",
   },
   {
     id: "heart-of-the-quest",
@@ -148,7 +148,7 @@ export const MILESTONES: Milestone[] = [
       "30 days of great sleep habits, all together. Longest and hardest leg — and the one that wins the machine.",
     emoji: "❤️",
     part: CPAP_PARTS.machine,
-    password: "breathe",
+    passwordHash: "aa8430ca0e63091efb65532391ebb2f1b7c1f02bc8f0f1e5fb82cc877d83ed71",
   },
 ];
 

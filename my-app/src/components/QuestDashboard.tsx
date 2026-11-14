@@ -52,8 +52,8 @@ export default function QuestDashboard() {
     [completed],
   );
 
-  const handleComplete = (id: string, password: string): boolean => {
-    const result = completeWithPassword(id, password);
+  const handleComplete = async (id: string, password: string): Promise<boolean> => {
+    const result = await completeWithPassword(id, password);
     if (result === "complete") {
       const milestone = MILESTONES.find((m) => m.id === id) ?? null;
       setLastUnlocked(milestone);
