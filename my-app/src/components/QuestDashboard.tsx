@@ -20,7 +20,7 @@ import { SealedDoor } from "./SealedDoor";
 import { Countdown } from "./Countdown";
 
 export default function QuestDashboard() {
-  const { ready, completed } = useSyncExternalStore(
+  const { completed } = useSyncExternalStore(
     subscribe,
     getSnapshot,
     getServerSnapshot,
@@ -80,17 +80,6 @@ export default function QuestDashboard() {
     setConfetti([]);
     setFinaleDismissed(false);
   };
-
-  if (!ready) {
-    return (
-      <div className="flex min-h-64 flex-col items-center justify-center gap-3 text-indigo-200/70">
-        <div className="animate-wobble text-5xl" aria-hidden>
-          🐢
-        </div>
-        <p className="text-sm">Waking up the night&hellip;</p>
-      </div>
-    );
-  }
 
   if (!GAME_DAY_AVAILABLE) {
     return (

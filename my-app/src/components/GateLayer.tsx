@@ -12,7 +12,7 @@ import {
 import { Celebration, makeConfetti, type ConfettiPiece } from "./Celebration";
 
 export function GateLayer() {
-  const { ready, gatesCleared } = useSyncExternalStore(
+  const { gatesCleared } = useSyncExternalStore(
     subscribe,
     getSnapshot,
     getServerSnapshot,
@@ -56,17 +56,6 @@ export function GateLayer() {
       setPending((p) => ({ ...p, [gate.id]: false }));
     }
   };
-
-  if (!ready) {
-    return (
-      <div className="flex min-h-32 flex-col items-center justify-center gap-3 text-indigo-200/70">
-        <div className="animate-wobble text-4xl" aria-hidden>
-          🐢
-        </div>
-        <p className="text-sm">Waking up the night&hellip;</p>
-      </div>
-    );
-  }
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-10">
