@@ -165,16 +165,7 @@ export function hydrate(storage?: any, key?: string, milestones?: any): Progress
   const ms = milestones || MILESTONES;
   let result: ProgressState;
   if (storage == null) {
-    if (typeof localStorage !== "undefined") {
-      try {
-        const raw = localStorage.getItem(k);
-        result = parseState(raw, ms);
-      } catch {
-        result = emptyState();
-      }
-    } else {
-      result = emptyState();
-    }
+    result = emptyState();
   } else if (typeof storage === "string") {
     result = parseState(storage, ms);
   } else {
@@ -275,13 +266,6 @@ export function hydrateState(storage?: any, key?: string, milestones?: any): Pro
   if (storage !== undefined) _storage = storage;
   if (key) _key = key;
   if (milestones) _milestones = milestones;
-  if (_storage == null && typeof localStorage !== "undefined") {
-    _storage = {
-      getItem: (k: string) => localStorage.getItem(k),
-      setItem: (k: string, v: string) => localStorage.setItem(k, v),
-      removeItem: (k: string) => localStorage.removeItem(k),
-    };
-  }
   _state = hydrate(_storage, _key, _milestones);
   _state.ready = true;
   emit();
@@ -312,15 +296,14 @@ export async function completeMilestone(...args: any[]): Promise<any> {
     const ms = (milestones || []).find((m: any) => m.id === id);
     const expectedHash = ms?.passwordHash;
     if (state.completed.has(id)) {
-      const s: any = state;
+      const s: any = { ...state, ready: true };
       s.result = "already";
       s.state = s;
-      if (storage) persist(state, storage, key);
       return s;
     }
     const ok = await H.verifyCode(entered, expectedHash);
     if (!ok) {
-      const s: any = state;
+      const s: any = { ...state, ready: true };
       s.result = "wrong";
       s.state = s;
       return s;
@@ -383,7 +366,6 @@ export function undoMilestone(...args: any[]): any {
     const storage = args[2];
     const key = args[3] || _key || STORAGE_KEY;
     if (!state.completed.has(id)) {
-      if (storage) persist(state, storage, key);
       return state;
     }
     const next = new Set(state.completed);
@@ -417,7 +399,6 @@ export function clearProgress(...args: any[]): any {
     const empty = emptyState();
     if (storage) {
       try { removeRaw(storage, key); } catch {}
-      try { writeRaw(storage, key, JSON.stringify([])); } catch {}
     }
     return empty;
   }
@@ -426,7 +407,6 @@ export function clearProgress(...args: any[]): any {
   const key = args[1] || _key;
   _state = emptyState();
   try { removeRaw(storage, key); } catch {}
-  try { writeRaw(storage, key, JSON.stringify([])); } catch {}
   emit();
   return true;
 }
