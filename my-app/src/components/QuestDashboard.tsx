@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
-import { HERO_NAME, MILESTONES, type Milestone } from "@/data/quest";
+import { HERO_NAME, MILESTONES, GAME_DAY_AVAILABLE } from "@/data/quest";
 import {
   clearProgress,
   completeWithPassword,
@@ -15,6 +15,9 @@ import { ProgressHeader } from "./ProgressHeader";
 import { CpapAssembler } from "./CpapAssembler";
 import { QuestTrail } from "./QuestTrail";
 import { Celebration, makeConfetti, type ConfettiPiece } from "./Celebration";
+import { GateLayer } from "./GateLayer";
+import { SealedDoor } from "./SealedDoor";
+import { Countdown } from "./Countdown";
 
 export default function QuestDashboard() {
   const { ready, completed } = useSyncExternalStore(
@@ -23,7 +26,7 @@ export default function QuestDashboard() {
     getServerSnapshot,
   );
   const [confetti, setConfetti] = useState<ConfettiPiece[]>([]);
-  const [lastUnlocked, setLastUnlocked] = useState<Milestone | null>(null);
+  const [lastUnlocked, setLastUnlocked] = useState<(typeof MILESTONES)[number] | null>(null);
   const [finaleDismissed, setFinaleDismissed] = useState(false);
 
   useEffect(() => {
@@ -85,6 +88,39 @@ export default function QuestDashboard() {
           🐢
         </div>
         <p className="text-sm">Waking up the night&hellip;</p>
+      </div>
+    );
+  }
+
+  if (!GAME_DAY_AVAILABLE) {
+    return (
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-16 px-4 py-10">
+        <GateLayer />
+
+        <section className="flex flex-col items-center gap-8">
+          <SealedDoor state={getSnapshot()} />
+          <Countdown />
+        </section>
+
+        <footer className="flex flex-col items-center gap-3 border-t border-white/10 pt-6">
+          <p className="text-xs text-indigo-300/50">
+            Made with 💚 for {HERO_NAME}. Progress is saved on this device only.
+          </p>
+          <button
+            type="button"
+            onClick={reset}
+            className="rounded-full border border-white/10 px-4 py-1.5 text-xs font-semibold text-white/50 transition-colors hover:border-white/25 hover:text-white/80"
+          >
+            Start over
+          </button>
+        </footer>
+
+        <Celebration
+          pieces={confetti}
+          finished={false}
+          milestone={null}
+          onDismiss={() => setConfetti([])}
+        />
       </div>
     );
   }

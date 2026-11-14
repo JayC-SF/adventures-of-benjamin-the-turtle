@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   title: "Adventures of Benjamin the Turtle",
   description:
     "A cozy night quest — Benjamin collects CPAP machine parts one milestone at a time.",
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

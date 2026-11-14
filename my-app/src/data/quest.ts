@@ -153,3 +153,42 @@ export const MILESTONES: Milestone[] = [
 ];
 
 export const STORAGE_KEY = "benjamin-quest-progress";
+
+export interface Gate {
+  id: string;
+  number: number;
+  title: string;
+  description: string;
+  codeHash: string;
+}
+
+export const GATES: Gate[] = [
+  {
+    id: "sleep-test-prescription",
+    number: 1,
+    title: "Sleep-Test Prescription",
+    description:
+      "Benjamin gets a referral and a prescription for a sleep test. The first real-world step on the journey to restful nights.",
+    codeHash: "9f135f9d311b569d69fa33c73cee94e5dd6e2507e3ad44a308d7c4a360cea06a",
+  },
+  {
+    id: "sleep-test",
+    number: 2,
+    title: "Sleep Test",
+    description:
+      "Benjamin completes the sleep test. The data tells the story of his nights.",
+    codeHash: "f5509dcc2659f25109c796735f4a7738ad53354f9ecba702c636121f17aae8af",
+  },
+  {
+    id: "cpap-prescription",
+    number: 3,
+    title: "CPAP Prescription",
+    description:
+      "The doctor reviews the results and prescribes a CPAP machine. Game day is unlocked.",
+    codeHash: "d72eebe8cc9ca132fafb00d7d6f42f0df4f58f8461388c8b085f42452d5dbebc",
+  },
+];
+
+export const GAME_DAY_AVAILABLE = false;
+
+export const GAME_DAY = new Date(Date.UTC(2027, 0, 10));
