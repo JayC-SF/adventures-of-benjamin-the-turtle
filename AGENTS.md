@@ -24,3 +24,17 @@
 - Delegate non-trivial exploration to subagents via the Task tool to keep the parent context window from running out. Good candidates: searching/reading multiple files, understanding existing patterns, or research. Send subagents with enough detail to work autonomously and have them return only a concise summary.
 - Match model scale to task complexity: quick lookups/greps and simple edits → smallest-fastest model; moderate single-file work or focused searches → mid-tier model; complex, multi-file, or ambiguous subtasks → largest/deepest model. Never spend a large model on a trivial task, and never leave genuinely hard reasoning to a small one.
 - Prefer free models for small-to-medium tasks; reserve paid/large models only for genuinely complex, multi-file, or hard-reasoning work to control cost.
+
+## Agent skills
+
+### Issue tracker
+
+GitHub Issues via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Defaults: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context. See `docs/agents/domain.md`.
