@@ -245,8 +245,9 @@ export function getSnapshot(): ProgressState {
   return _state;
 }
 
+const SERVER_SNAPSHOT: ProgressState = { ready: false, completed: new Set(), gatesCleared: new Set() };
 export function getServerSnapshot(): ProgressState {
-  return { ready: false, completed: new Set(), gatesCleared: new Set() };
+  return SERVER_SNAPSHOT;
 }
 
 export function getState(): ProgressState {
